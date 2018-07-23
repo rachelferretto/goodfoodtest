@@ -1,0 +1,36 @@
+
+<h1><%= @dish['name'] %> </h1>
+<img src="<%= @dish['image_url'] %>" alt= "">
+
+
+<form action ="/dishes/<%= @dish['id'] %>" method= "post"> 
+<%#default method is 'get', delete does not exit so need to make input below:%>
+<input type="hidden" name="_method" value = "delete">
+<button>Delete</button>
+
+</form>
+
+<a href="/dishes/<%= @dish['id']%>/edit"> Edit </a>
+
+
+<p> Dish posted by <%= @dish.user.email %></p>
+
+<p><%= @dish.likes.count%> Likes</p>
+<form action="/likes" method="post"> <%#creating a like resource%>
+    <input type="hidden" name="dish_id" value="<%= @dish.id %>">
+    <button>Like</button>
+</form>
+
+
+<form action="/comments" method= "post">
+<input type="hidden" name="dish_id" value="<%= @dish['id'] %>">
+    <label for=""> content </label>
+    <textarea name="content"></textarea>
+    <button> Post </button>
+    </form>
+
+<p>COMMENTS: </p>
+<% @comments.each do |comment| %>
+<p><%= comment['content']  %></p> <%# grabs the comment data from content column in database%>
+<p> Posted by <%= comment.user.email %> </p>
+<% end %>
